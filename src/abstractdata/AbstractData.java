@@ -7,6 +7,8 @@ package abstractdata;
 
 import DataStructures.DataStructures;
 import Employee.Guards;
+import LinkList.LinkList;
+
 /**
  *
  * @author Sean
@@ -18,11 +20,10 @@ public class AbstractData {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        DataStructures[] data = new DataStructures[4];
-        data[1] = new DataStructures();
-        data[2] = new DataStructures();
-        data[1].printName();
-        data[2].printName();
+        
+        
+
+        
 
     }
 

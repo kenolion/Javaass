@@ -5,14 +5,12 @@
  */
 package DataStructures;
 
+
 /**
  *
  * @author Sean
  */
 public class DataStructures {
     
-    public void printName(){
-        
-        System.out.println("this is a test");
-    }
+    
 }
