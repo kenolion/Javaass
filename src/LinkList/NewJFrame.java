@@ -8,6 +8,7 @@ package LinkList;
 import Employee.Guards;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 /**
  *
@@ -15,18 +16,20 @@ import java.awt.event.ActionListener;
  */
 public class NewJFrame extends javax.swing.JFrame {
 
-    LinkList<Guards> myList = new LinkList();
-
+    QueueInterfaceV2<Guards> myList = new LinkQueue<Guards>();
+    Iterator<Guards> myIterator;
+    
     /**
      * Creates new form NewJFrame
      */
     public NewJFrame() {
         initComponents();
         //jTextArea1.setEditable(false);
-        myList.add(new Guards("Soo",10));
-        myList.add(new Guards("hoo",20));
-        myList.add(new Guards("ken",30));
-        myList.add(2,new Guards("keith",30));
+        myList.enqueue(new Guards("Soo",10));
+        myList.enqueue(new Guards("hoo",20));
+        myList.enqueue(new Guards("ken",30));
+        myList.enqueue(new Guards("keith",30));
+        myIterator = myList.getIterator();
     }
 
     /**
@@ -120,12 +123,16 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
         String t = "";
-        for(int i = 1; i <= myList.getSize();i++){
-            t += myList.getEntry(i).getName()+"\n";
+        
+            
+            t += myIterator.next().getName() +"\n";
+          
             jTextArea1.setText(t);
             
-        }
+           
+        
         jDialog1.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -162,6 +169,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 new NewJFrame().setVisible(true);
             }
         });
+  
 
     }
 

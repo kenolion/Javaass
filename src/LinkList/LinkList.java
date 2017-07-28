@@ -13,18 +13,17 @@ public class LinkList<T> implements LinkListInterface<T> {
 
     private Node start;
     private Node end;
-    private int size;
+
 
     public LinkList() {
 
         start = null;
         end = null;
-        size = 0;
+ 
     }
 
     public boolean add(T newEntry) {
         Node newNode = new Node(newEntry);
-        size++;
         if (start == null) {
             start = newNode;
             end = start;
@@ -54,7 +53,6 @@ public class LinkList<T> implements LinkListInterface<T> {
         nodeBefore.setNext(newNode);
       }
 
-      size++;
     } else {
       isSuccessful = false;
     }
@@ -69,7 +67,7 @@ public class LinkList<T> implements LinkListInterface<T> {
             if (givenPosition == 1) {
                 result = start.data;
                 start = start.next;
-            } else if (givenPosition == size) {
+            } else if (givenPosition == ) {
 
             } else {
                 Node nodeBefore = start;
@@ -79,7 +77,6 @@ public class LinkList<T> implements LinkListInterface<T> {
                 result = nodeBefore.next.data;
                 nodeBefore.next = nodeBefore.next.next;
             }
-            size--;
 
         }
         return result;
@@ -88,7 +85,6 @@ public class LinkList<T> implements LinkListInterface<T> {
     public void clear() {
         start = null;
         end = null;
-        size = 0;
     }
 
     public boolean replace(int givenPosition, T newEntry) {
@@ -98,7 +94,7 @@ public class LinkList<T> implements LinkListInterface<T> {
     public T getEntry(int givenPosition) {
         if (givenPosition == 1) {
             return start.data;
-        } else if (givenPosition == size) {
+        } else if (givenPosition) {
             return end.data;
         } else {
             Node tempNode = new Node();
@@ -117,15 +113,8 @@ public class LinkList<T> implements LinkListInterface<T> {
         return true;
     }
 
-    public int getSize() {
-        return size;
-    }
-
     public boolean isEmpty() {
-        if (size != 0) {
-            return false;
-        }
-        return true;
+        return start !=null;
     }
 
     public boolean isFull() {
