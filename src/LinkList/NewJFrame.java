@@ -5,10 +5,19 @@
  */
 package LinkList;
 
+import Emergency.Emergency;
 import Employee.Guards;
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 
 /**
  *
@@ -18,18 +27,24 @@ public class NewJFrame extends javax.swing.JFrame {
 
     QueueInterfaceV2<Guards> myList = new LinkQueue<Guards>();
     Iterator<Guards> myIterator;
-    
+    QueueInterfaceV2<Emergency> emergencyList = new LinkQueue<Emergency>();
+
     /**
      * Creates new form NewJFrame
      */
     public NewJFrame() {
         initComponents();
         //jTextArea1.setEditable(false);
-        myList.enqueue(new Guards("Soo",10));
-        myList.enqueue(new Guards("hoo",20));
-        myList.enqueue(new Guards("ken",30));
-        myList.enqueue(new Guards("keith",30));
+        myList.enqueue(new Guards("Soo", 10));
+        myList.enqueue(new Guards("hoo", 20));
+        myList.enqueue(new Guards("ken", 30));
+        myList.enqueue(new Guards("keith", 30));
+
         myIterator = myList.getIterator();
+        EmergencyMenu.setVisible(false);
+        jPanel2.setVisible(false);
+        UserMenu.setVisible(false);
+        EmergencyMenu.setVisible(false);
     }
 
     /**
@@ -42,16 +57,45 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jDialog1 = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        maintainUsersButton = new javax.swing.JButton();
+        EmergencyServiceButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        UserMenu = new javax.swing.JPanel();
+        MainPanel = new javax.swing.JPanel();
+        AddUserPnl = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nameTextField = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        ageTextField = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        PanelTwo = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        addGuardsBtn = new javax.swing.JButton();
+        updateGuardsBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
+        MainMenu = new javax.swing.JPanel();
+        UserBtn = new javax.swing.JButton();
+        EmergencyBtn = new javax.swing.JButton();
+        EmergencyMenu = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        AddEmergency = new javax.swing.JPanel();
+        emergencyAdd = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        emergencyNameLbl = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        emergencyDescLbl = new javax.swing.JTextArea();
+        EmergencyName = new javax.swing.JTextField();
+        UpdateEmergency = new javax.swing.JPanel();
+        BackbtnEmergency = new javax.swing.JButton();
+        updateEmergencyBtn = new javax.swing.JButton();
+        addEmergencyBtn = new javax.swing.JButton();
 
         jDialog1.setMinimumSize(new java.awt.Dimension(500, 500));
         jDialog1.setResizable(false);
@@ -67,8 +111,52 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGap(0, 421, Short.MAX_VALUE)
         );
 
+        maintainUsersButton.setText("Maintain Users");
+        maintainUsersButton.setToolTipText("");
+        maintainUsersButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maintainUsersButtonActionPerformed(evt);
+            }
+        });
+
+        EmergencyServiceButton.setText("Maintain Emergency Service");
+        EmergencyServiceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmergencyServiceButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Guard and User management System");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(maintainUsersButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(EmergencyServiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(582, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel4)
+                .addGap(55, 55, 55)
+                .addComponent(maintainUsersButton)
+                .addGap(18, 18, 18)
+                .addComponent(EmergencyServiceButton)
+                .addContainerGap(356, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        MainPanel.setLayout(new java.awt.CardLayout());
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -81,18 +169,13 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Type:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        nameTextField.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                nameTextFieldComponentAdded(evt);
             }
         });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Guard", "User" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Age:");
 
@@ -108,92 +191,419 @@ public class NewJFrame extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        javax.swing.GroupLayout AddUserPnlLayout = new javax.swing.GroupLayout(AddUserPnl);
+        AddUserPnl.setLayout(AddUserPnlLayout);
+        AddUserPnlLayout.setHorizontalGroup(
+            AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddUserPnlLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddUserPnlLayout.createSequentialGroup()
+                        .addGroup(AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addGroup(AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(222, 222, 222)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(AddUserPnlLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        AddUserPnlLayout.setVerticalGroup(
+            AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddUserPnlLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddUserPnlLayout.createSequentialGroup()
+                        .addGroup(AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(ageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(AddUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+
+        MainPanel.add(AddUserPnl, "AddUserPnl");
+
+        jLabel5.setText("Emergency Menu");
+
+        javax.swing.GroupLayout PanelTwoLayout = new javax.swing.GroupLayout(PanelTwo);
+        PanelTwo.setLayout(PanelTwoLayout);
+        PanelTwoLayout.setHorizontalGroup(
+            PanelTwoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelTwoLayout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(jLabel5)
+                .addContainerGap(635, Short.MAX_VALUE))
+        );
+        PanelTwoLayout.setVerticalGroup(
+            PanelTwoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelTwoLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel5)
+                .addContainerGap(317, Short.MAX_VALUE))
+        );
+
+        MainPanel.add(PanelTwo, "PanelTwo");
+
+        addGuardsBtn.setText("Add Users");
+        addGuardsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addGuardsBtnActionPerformed(evt);
+            }
+        });
+
+        updateGuardsBtn.setText("Update Users");
+        updateGuardsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateGuardsBtnActionPerformed(evt);
+            }
+        });
+
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout UserMenuLayout = new javax.swing.GroupLayout(UserMenu);
+        UserMenu.setLayout(UserMenuLayout);
+        UserMenuLayout.setHorizontalGroup(
+            UserMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UserMenuLayout.createSequentialGroup()
+                .addContainerGap(546, Short.MAX_VALUE)
+                .addComponent(backBtn)
+                .addGap(18, 18, 18)
+                .addComponent(updateGuardsBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addGuardsBtn)
+                .addContainerGap())
+            .addGroup(UserMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(UserMenuLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        UserMenuLayout.setVerticalGroup(
+            UserMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UserMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(UserMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addGuardsBtn)
+                    .addComponent(updateGuardsBtn)
+                    .addComponent(backBtn))
+                .addContainerGap(384, Short.MAX_VALUE))
+            .addGroup(UserMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UserMenuLayout.createSequentialGroup()
+                    .addContainerGap(46, Short.MAX_VALUE)
+                    .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+
+        UserBtn.setText("Manage Users");
+        UserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserBtnActionPerformed(evt);
+            }
+        });
+
+        EmergencyBtn.setText("Manage Emergency");
+        EmergencyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmergencyBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout MainMenuLayout = new javax.swing.GroupLayout(MainMenu);
+        MainMenu.setLayout(MainMenuLayout);
+        MainMenuLayout.setHorizontalGroup(
+            MainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainMenuLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(MainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EmergencyBtn)
+                    .addComponent(UserBtn))
+                .addContainerGap(645, Short.MAX_VALUE))
+        );
+        MainMenuLayout.setVerticalGroup(
+            MainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainMenuLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(UserBtn)
+                .addGap(18, 18, 18)
+                .addComponent(EmergencyBtn)
+                .addContainerGap(315, Short.MAX_VALUE))
+        );
+
+        EmergencyMenu.setPreferredSize(new java.awt.Dimension(804, 418));
+
+        jPanel1.setLayout(new java.awt.CardLayout());
+
+        emergencyAdd.setText("Add");
+        emergencyAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emergencyAddActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setText("Add New Emergency");
+
+        emergencyNameLbl.setText("Emergency Name :");
+
+        jLabel8.setText("Emergency Description:");
+
+        emergencyDescLbl.setColumns(20);
+        emergencyDescLbl.setRows(5);
+        jScrollPane2.setViewportView(emergencyDescLbl);
+
+        javax.swing.GroupLayout AddEmergencyLayout = new javax.swing.GroupLayout(AddEmergency);
+        AddEmergency.setLayout(AddEmergencyLayout);
+        AddEmergencyLayout.setHorizontalGroup(
+            AddEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddEmergencyLayout.createSequentialGroup()
+                .addGroup(AddEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddEmergencyLayout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(emergencyAdd))
+                    .addGroup(AddEmergencyLayout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addGroup(AddEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(AddEmergencyLayout.createSequentialGroup()
+                                .addGroup(AddEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(emergencyNameLbl)
+                                    .addComponent(jLabel8))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(AddEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane2)
+                                    .addComponent(EmergencyName))))))
+                .addContainerGap(438, Short.MAX_VALUE))
+        );
+        AddEmergencyLayout.setVerticalGroup(
+            AddEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddEmergencyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addGroup(AddEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emergencyNameLbl)
+                    .addComponent(EmergencyName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(AddEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addComponent(emergencyAdd)
+                .addGap(46, 46, 46))
+        );
+
+        jPanel1.add(AddEmergency, "card2");
+
+        javax.swing.GroupLayout UpdateEmergencyLayout = new javax.swing.GroupLayout(UpdateEmergency);
+        UpdateEmergency.setLayout(UpdateEmergencyLayout);
+        UpdateEmergencyLayout.setHorizontalGroup(
+            UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 784, Short.MAX_VALUE)
+        );
+        UpdateEmergencyLayout.setVerticalGroup(
+            UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 363, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(UpdateEmergency, "card3");
+
+        BackbtnEmergency.setText("Back");
+        BackbtnEmergency.setToolTipText("");
+        BackbtnEmergency.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackbtnEmergencyActionPerformed(evt);
+            }
+        });
+
+        updateEmergencyBtn.setText("Update Emergency");
+
+        addEmergencyBtn.setText("Add Emergency");
+        addEmergencyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEmergencyBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout EmergencyMenuLayout = new javax.swing.GroupLayout(EmergencyMenu);
+        EmergencyMenu.setLayout(EmergencyMenuLayout);
+        EmergencyMenuLayout.setHorizontalGroup(
+            EmergencyMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EmergencyMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(EmergencyMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EmergencyMenuLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(BackbtnEmergency)
+                        .addGap(18, 18, 18)
+                        .addComponent(addEmergencyBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(updateEmergencyBtn)
+                        .addGap(16, 16, 16))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        EmergencyMenuLayout.setVerticalGroup(
+            EmergencyMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EmergencyMenuLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(EmergencyMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BackbtnEmergency)
+                    .addComponent(updateEmergencyBtn)
+                    .addComponent(addEmergencyBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addComponent(jButton1)
-                        .addGap(59, 59, 59)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(222, 222, 222)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(374, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(UserMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(19, Short.MAX_VALUE)
+                    .addComponent(MainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(EmergencyMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(148, 148, 148)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(UserMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(MainMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(EmergencyMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void maintainUsersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maintainUsersButtonActionPerformed
         // TODO add your handling code here:
+    }//GEN-LAST:event_maintainUsersButtonActionPerformed
 
-          
-          myList.enqueue(new Guards(jTextField1.getText(),Integer.parseInt(jTextField2.getText())));
-          myIterator = myList.getIterator();
-          jComboBox2.getSelectedItem();
-        
-        //jDialog1.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void EmergencyServiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmergencyServiceButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        EmergencyMenu.setVisible(true);
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_EmergencyServiceButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String toDisplay = "";
-       
-        while(myIterator.hasNext()){
-             toDisplay += myIterator.next().getName() +"\n";
-             myIterator.remove();
+
+        while (myIterator.hasNext()) {
+            toDisplay += myIterator.next().getName() + "\n";
+            myIterator.remove();
         }
         jTextArea1.setText(toDisplay);
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void nameTextFieldComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_nameTextFieldComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameTextFieldComponentAdded
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        myList.enqueue(new Guards(nameTextField.getText(), Integer.parseInt(ageTextField.getText())));
+        myIterator = myList.getIterator();
+        jComboBox2.getSelectedItem();
+
+        //jDialog1.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void updateGuardsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateGuardsBtnActionPerformed
+        // TODO add your handling code here:
+        CardLayout card = (CardLayout) MainPanel.getLayout();
+        card.show(MainPanel, "PanelTwo");
+
+    }//GEN-LAST:event_updateGuardsBtnActionPerformed
+
+    private void addGuardsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGuardsBtnActionPerformed
+        // TODO add your handling code here:
+        CardLayout card = (CardLayout) MainPanel.getLayout();
+        card.show(MainPanel, "AddUserPnl");
+    }//GEN-LAST:event_addGuardsBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        // TODO add your handling code here:
+        UserMenu.setVisible(false);
+        MainMenu.setVisible(true);
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void UserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserBtnActionPerformed
+        // TODO add your handling code here:
+        UserMenu.setVisible(true);
+        MainMenu.setVisible(false);
+    }//GEN-LAST:event_UserBtnActionPerformed
+
+    private void EmergencyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmergencyBtnActionPerformed
+        // TODO add your handling code here:
+        EmergencyMenu.setVisible(true);
+        MainMenu.setVisible(false);
+    }//GEN-LAST:event_EmergencyBtnActionPerformed
+
+    private void emergencyAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emergencyAddActionPerformed
+        // TODO add your handling code here:
+        
+        emergencyList.enqueue(new Emergency(emergencyNameLbl.getText(), emergencyDescLbl.getText(),ZonedDateTime.now()));
+        System.out.println(emergencyList.getFront().getFormattedDate());
+    }//GEN-LAST:event_emergencyAddActionPerformed
+
+    private void BackbtnEmergencyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackbtnEmergencyActionPerformed
+        // TODO add your handling code here:
+        EmergencyMenu.setVisible(false);
+        MainMenu.setVisible(true);
+    }//GEN-LAST:event_BackbtnEmergencyActionPerformed
+
+    private void addEmergencyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmergencyBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addEmergencyBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,11 +638,30 @@ public class NewJFrame extends javax.swing.JFrame {
                 new NewJFrame().setVisible(true);
             }
         });
-  
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AddEmergency;
+    private javax.swing.JPanel AddUserPnl;
+    private javax.swing.JButton BackbtnEmergency;
+    private javax.swing.JButton EmergencyBtn;
+    private javax.swing.JPanel EmergencyMenu;
+    private javax.swing.JTextField EmergencyName;
+    private javax.swing.JButton EmergencyServiceButton;
+    private javax.swing.JPanel MainMenu;
+    private javax.swing.JPanel MainPanel;
+    private javax.swing.JPanel PanelTwo;
+    private javax.swing.JPanel UpdateEmergency;
+    private javax.swing.JButton UserBtn;
+    private javax.swing.JPanel UserMenu;
+    private javax.swing.JButton addEmergencyBtn;
+    private javax.swing.JButton addGuardsBtn;
+    private javax.swing.JTextField ageTextField;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JButton emergencyAdd;
+    private javax.swing.JTextArea emergencyDescLbl;
+    private javax.swing.JLabel emergencyNameLbl;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -240,9 +669,18 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton maintainUsersButton;
+    private javax.swing.JTextField nameTextField;
+    private javax.swing.JButton updateEmergencyBtn;
+    private javax.swing.JButton updateGuardsBtn;
     // End of variables declaration//GEN-END:variables
 }
