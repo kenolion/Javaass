@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -28,7 +29,7 @@ public class NewJFrame extends javax.swing.JFrame {
     QueueInterfaceV2<Guards> myList = new LinkQueue<Guards>();
     Iterator<Guards> myIterator;
     QueueInterfaceV2<Emergency> emergencyList = new LinkQueue<Emergency>();
-
+    Iterator<Emergency> qIterator;
     /**
      * Creates new form NewJFrame
      */
@@ -83,7 +84,7 @@ public class NewJFrame extends javax.swing.JFrame {
         UserBtn = new javax.swing.JButton();
         EmergencyBtn = new javax.swing.JButton();
         EmergencyMenu = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        EmergencyPnl = new javax.swing.JPanel();
         AddEmergency = new javax.swing.JPanel();
         emergencyAdd = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -93,6 +94,9 @@ public class NewJFrame extends javax.swing.JFrame {
         emergencyDescLbl = new javax.swing.JTextArea();
         EmergencyName = new javax.swing.JTextField();
         UpdateEmergency = new javax.swing.JPanel();
+        EmergencyCBox = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        EmergencyTxtArea = new javax.swing.JTextArea();
         BackbtnEmergency = new javax.swing.JButton();
         updateEmergencyBtn = new javax.swing.JButton();
         addEmergencyBtn = new javax.swing.JButton();
@@ -176,6 +180,11 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Guard", "User" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Age:");
 
@@ -357,7 +366,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         EmergencyMenu.setPreferredSize(new java.awt.Dimension(804, 418));
 
-        jPanel1.setLayout(new java.awt.CardLayout());
+        EmergencyPnl.setLayout(new java.awt.CardLayout());
 
         emergencyAdd.setText("Add");
         emergencyAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -398,7 +407,7 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addGroup(AddEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane2)
                                     .addComponent(EmergencyName))))))
-                .addContainerGap(438, Short.MAX_VALUE))
+                .addContainerGap(448, Short.MAX_VALUE))
         );
         AddEmergencyLayout.setVerticalGroup(
             AddEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,20 +427,40 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(46, 46, 46))
         );
 
-        jPanel1.add(AddEmergency, "card2");
+        EmergencyPnl.add(AddEmergency, "AddEmergency");
+
+        EmergencyCBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmergencyCBoxActionPerformed(evt);
+            }
+        });
+
+        EmergencyTxtArea.setColumns(20);
+        EmergencyTxtArea.setRows(5);
+        jScrollPane3.setViewportView(EmergencyTxtArea);
 
         javax.swing.GroupLayout UpdateEmergencyLayout = new javax.swing.GroupLayout(UpdateEmergency);
         UpdateEmergency.setLayout(UpdateEmergencyLayout);
         UpdateEmergencyLayout.setHorizontalGroup(
             UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 784, Short.MAX_VALUE)
+            .addGroup(UpdateEmergencyLayout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addComponent(EmergencyCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(195, 195, 195)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(324, Short.MAX_VALUE))
         );
         UpdateEmergencyLayout.setVerticalGroup(
             UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 363, Short.MAX_VALUE)
+            .addGroup(UpdateEmergencyLayout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EmergencyCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
-        jPanel1.add(UpdateEmergency, "card3");
+        EmergencyPnl.add(UpdateEmergency, "UpdateEmergency");
 
         BackbtnEmergency.setText("Back");
         BackbtnEmergency.setToolTipText("");
@@ -442,6 +471,11 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         updateEmergencyBtn.setText("Update Emergency");
+        updateEmergencyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateEmergencyBtnActionPerformed(evt);
+            }
+        });
 
         addEmergencyBtn.setText("Add Emergency");
         addEmergencyBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -455,17 +489,18 @@ public class NewJFrame extends javax.swing.JFrame {
         EmergencyMenuLayout.setHorizontalGroup(
             EmergencyMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(EmergencyMenuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(EmergencyMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EmergencyMenuLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(EmergencyMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(EmergencyMenuLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(EmergencyPnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(EmergencyMenuLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
                         .addComponent(BackbtnEmergency)
-                        .addGap(18, 18, 18)
+                        .addGap(150, 150, 150)
                         .addComponent(addEmergencyBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(updateEmergencyBtn)
-                        .addGap(16, 16, 16))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         EmergencyMenuLayout.setVerticalGroup(
@@ -477,7 +512,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addComponent(updateEmergencyBtn)
                     .addComponent(addEmergencyBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(EmergencyPnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -591,8 +626,14 @@ public class NewJFrame extends javax.swing.JFrame {
     private void emergencyAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emergencyAddActionPerformed
         // TODO add your handling code here:
         
-        emergencyList.enqueue(new Emergency(emergencyNameLbl.getText(), emergencyDescLbl.getText(),ZonedDateTime.now()));
-        System.out.println(emergencyList.getFront().getFormattedDate());
+        emergencyList.enqueue(new Emergency(EmergencyName.getText(), emergencyDescLbl.getText(),ZonedDateTime.now()));
+        EmergencyCBox.addItem(emergencyList.getFront().getName());
+//        qIterator = emergencyList.getIterator();
+//        String toDisplay = "";
+//         while (qIterator.hasNext()) {
+//            toDisplay += qIterator.next().getName() + "\n";
+//            qIterator.remove();
+//        }
     }//GEN-LAST:event_emergencyAddActionPerformed
 
     private void BackbtnEmergencyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackbtnEmergencyActionPerformed
@@ -603,7 +644,30 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void addEmergencyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmergencyBtnActionPerformed
         // TODO add your handling code here:
+         CardLayout card = (CardLayout) EmergencyPnl.getLayout();
+        card.show(EmergencyPnl, "AddEmergency");
+        
     }//GEN-LAST:event_addEmergencyBtnActionPerformed
+
+    private void updateEmergencyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateEmergencyBtnActionPerformed
+        // TODO add your handling code here:
+         CardLayout card = (CardLayout) EmergencyPnl.getLayout();
+        card.show(EmergencyPnl, "UpdateEmergency");
+            
+    }//GEN-LAST:event_updateEmergencyBtnActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void EmergencyCBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmergencyCBoxActionPerformed
+        // TODO add your handling code here:
+        if(!myList.isEmpty()){
+        String toDisplay = "Emergency Name:";
+        toDisplay += EmergencyCBox.getSelectedItem().toString();
+        EmergencyTxtArea.setText(toDisplay);
+        }
+    }//GEN-LAST:event_EmergencyCBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -633,6 +697,7 @@ public class NewJFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new NewJFrame().setVisible(true);
@@ -646,9 +711,12 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel AddUserPnl;
     private javax.swing.JButton BackbtnEmergency;
     private javax.swing.JButton EmergencyBtn;
+    private javax.swing.JComboBox<String> EmergencyCBox;
     private javax.swing.JPanel EmergencyMenu;
     private javax.swing.JTextField EmergencyName;
+    private javax.swing.JPanel EmergencyPnl;
     private javax.swing.JButton EmergencyServiceButton;
+    private javax.swing.JTextArea EmergencyTxtArea;
     private javax.swing.JPanel MainMenu;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel PanelTwo;
@@ -673,10 +741,10 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton maintainUsersButton;
     private javax.swing.JTextField nameTextField;

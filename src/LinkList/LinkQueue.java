@@ -26,7 +26,7 @@ public class LinkQueue<T> implements QueueInterfaceV2<T> {
         } else {
             Node newNode = new Node(newEntry, lastNode.next);
             lastNode.next = newNode;
-            lastNode = newNode;
+            //lastNode = newNode;
 
         }
 

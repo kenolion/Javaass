@@ -305,6 +305,9 @@
                       </StringArray>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox2ActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
@@ -462,18 +465,19 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="BackbtnEmergency" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="addEmergencyBtn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="updateEmergencyBtn" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="EmergencyPnl" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <Component id="BackbtnEmergency" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="addEmergencyBtn" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="updateEmergencyBtn" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -489,21 +493,21 @@
                       <Component id="addEmergencyBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel1" max="32767" attributes="0"/>
+                  <Component id="EmergencyPnl" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JPanel" name="EmergencyPnl">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="AddEmergency">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="card2"/>
+                  <CardConstraints cardName="AddEmergency"/>
                 </Constraint>
               </Constraints>
 
@@ -609,22 +613,65 @@
             <Container class="javax.swing.JPanel" name="UpdateEmergency">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="card3"/>
+                  <CardConstraints cardName="UpdateEmergency"/>
                 </Constraint>
               </Constraints>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="784" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                          <Component id="EmergencyCBox" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="195" max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="314" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="363" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane3" min="-2" pref="225" max="-2" attributes="0"/>
+                              <Component id="EmergencyCBox" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="84" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JComboBox" name="EmergencyCBox">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EmergencyCBoxActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
+                </Component>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextArea" name="EmergencyTxtArea">
+                      <Properties>
+                        <Property name="columns" type="int" value="20"/>
+                        <Property name="rows" type="int" value="5"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
             </Container>
           </SubComponents>
         </Container>
@@ -641,6 +688,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Update Emergency"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateEmergencyBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="addEmergencyBtn">
           <Properties>
