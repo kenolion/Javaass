@@ -16,17 +16,21 @@ import java.util.Locale;
  *
  * @author Sean
  */
-public class Emergency {
+public class Emergency{
     
     private String name;
     private String description;
     private ZonedDateTime date;
     private String formattedDate;
+    private static int totalEmergency;
+    private int emergencyID;
     public Emergency(String name,String description,ZonedDateTime date){
         this.name = name;
         this.description = description;
         this.date = date;
         formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm", Locale.ENGLISH));
+        totalEmergency++;
+        emergencyID = totalEmergency;
     }
 
     /**
@@ -84,6 +88,32 @@ public class Emergency {
     public void setFormattedDate(String formattedDate) {
         this.formattedDate = formattedDate;
     }
+
+    /**
+     * @return the emergencyID
+     */
+    public int getEmergencyID() {
+        return emergencyID;
+    }
+
+    /**
+     * @param emergencyID the emergencyID to set
+     */
+    public void setEmergencyID(int emergencyID) {
+        this.emergencyID = emergencyID;
+    }
     
-    
+    @Override
+    public String toString(){
+        String s = "\nEmergency ID:";
+        s += emergencyID;
+        s += "\nEmergency Name:";
+        s += name;
+        s += "\nEmergency Description:";
+        s += description;
+        s += "\nTime :";
+        s += formattedDate;
+        
+        return s;
+    }
 }

@@ -66,10 +66,18 @@ public class LinkQueue<T> implements QueueInterfaceV2<T> {
         return new QueueIterator();
     }
 
+    public Node getNodeAt(int position){
+        Iterator qIterator = getIterator();
+        for(int i = 1 ; i< position-1;i++){
+            if
+            
+        }
+        
+    }
+    
     private class QueueIterator<T> implements Iterator {
 
         Node currNode = lastNode.next;
-
         @Override
         public boolean hasNext() {
 
@@ -86,7 +94,8 @@ public class LinkQueue<T> implements QueueInterfaceV2<T> {
             return temp;
 
         }
-
+        
+       
         public void remove() {
                 if (currNode == lastNode.next) {
                     currNode = null;
