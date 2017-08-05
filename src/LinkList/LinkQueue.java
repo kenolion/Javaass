@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 public class LinkQueue<T> implements QueueInterfaceV2<T>,Serializable {
 
     Node lastNode;
-
+    static final long serialVersionUID = 1L;
     @Override
     public void enqueue(T newEntry) {
 
@@ -65,15 +65,6 @@ public class LinkQueue<T> implements QueueInterfaceV2<T>,Serializable {
     @Override
     public Iterator getIterator() {
         return new QueueIterator();
-    }
-
-    public Node getNodeAt(int position){
-        Iterator qIterator = getIterator();
-        for(int i = 1 ; i< position-1;i++){
-            if
-            
-        }
-        
     }
     
     private class QueueIterator<T> implements Iterator {

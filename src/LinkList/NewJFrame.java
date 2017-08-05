@@ -68,6 +68,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 qIterator.remove();
                 count++;
             }
+            emergencyList.getFront().setTotalEmergency(emergencyList.getFront().getEmergencyID());
   
             System.out.println(emergencyList.getFront().getTotalEmergency());
         } catch (IOException i) {
