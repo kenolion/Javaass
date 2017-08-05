@@ -5,6 +5,7 @@
  */
 package LinkList;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -12,7 +13,7 @@ import java.util.NoSuchElementException;
  *
  * @author Sean
  */
-public class LinkQueue<T> implements QueueInterfaceV2<T> {
+public class LinkQueue<T> implements QueueInterfaceV2<T>,Serializable {
 
     Node lastNode;
 
@@ -104,7 +105,7 @@ public class LinkQueue<T> implements QueueInterfaceV2<T> {
 
     }
 
-    private class Node {
+    private class Node implements Serializable{
 
         private T data;
         private Node next;

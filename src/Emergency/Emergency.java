@@ -5,6 +5,7 @@
  */
 package Emergency;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,7 +17,7 @@ import java.util.Locale;
  *
  * @author Sean
  */
-public class Emergency{
+public class Emergency implements Serializable{
     
     private String name;
     private String description;

@@ -10,6 +10,7 @@ import Employee.Guards;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -52,18 +53,27 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel2.setVisible(false);
         UserMenu.setVisible(false);
         EmergencyMenu.setVisible(false);
-        try{
+
+        try {
             FileInputStream fileIn = new FileInputStream("user.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            emergencyList.enqueue((Emergency)in.readObject());
+            emergencyList = (QueueInterfaceV2<Emergency>)in.readObject();
+            
             in.close();
             fileIn.close();
-            
-        }catch(IOException i){
+            qIterator = emergencyList.getIterator();
+            int count =0;
+            while(qIterator.hasNext()){
+                EmergencyCBox.insertItemAt(qIterator.next().getName(),count);
+                qIterator.remove();
+                count++;
+            }
+        } catch (IOException i) {
             i.printStackTrace();
-        }catch(ClassNotFoundException c ){
+        } catch (ClassNotFoundException c) {
             c.printStackTrace();
         }
+
     }
 
     /**
@@ -699,6 +709,12 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         CardLayout card = (CardLayout) EmergencyPnl.getLayout();
         card.show(EmergencyPnl, "UpdateEmergency");
+        qIterator = emergencyList.getIterator();
+
+        while (qIterator.hasNext()) {
+
+            qIterator.remove();
+        }
 
     }//GEN-LAST:event_updateEmergencyBtnActionPerformed
 
@@ -727,18 +743,18 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-      
+
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-           try {
+        try {
             FileOutputStream fileOut = new FileOutputStream("user.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(emergencyList.getFront());
+            out.writeObject(emergencyList);
             out.close();
             fileOut.close();
-            
+
         } catch (IOException i) {
             i.printStackTrace();
         }
@@ -777,7 +793,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 new NewJFrame().setVisible(true);
             }
         });
-       
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
