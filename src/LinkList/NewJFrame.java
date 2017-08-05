@@ -68,6 +68,8 @@ public class NewJFrame extends javax.swing.JFrame {
                 qIterator.remove();
                 count++;
             }
+  
+            System.out.println(emergencyList.getFront().getTotalEmergency());
         } catch (IOException i) {
             i.printStackTrace();
         } catch (ClassNotFoundException c) {

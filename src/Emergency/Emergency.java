@@ -25,6 +25,7 @@ public class Emergency implements Serializable{
     private String formattedDate;
     private static int totalEmergency;
     private int emergencyID;
+    static final long serialVersionUID = 1L;
     public Emergency(String name,String description,ZonedDateTime date){
         this.name = name;
         this.description = description;
@@ -117,4 +118,20 @@ public class Emergency implements Serializable{
         
         return s;
     }
+
+    /**
+     * @return the totalEmergency
+     */
+    public static int getTotalEmergency() {
+        return totalEmergency;
+    }
+
+    /**
+     * @param aTotalEmergency the totalEmergency to set
+     */
+    public static void setTotalEmergency(int aTotalEmergency) {
+        totalEmergency = aTotalEmergency;
+    }
+
+
 }
