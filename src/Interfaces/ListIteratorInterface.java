@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LinkList;
+package Interfaces;
 
 import java.util.Iterator;
 
@@ -11,9 +11,8 @@ import java.util.Iterator;
  *
  * @author Sean
  */
-public interface QueueInterfaceV2<T> extends QueueInterface<T>{
-  Iterator getIterator();
-  
+public interface ListIteratorInterface<T> extends LinkListInterface<T> {
+     Iterator getIterator();
   
     
 }

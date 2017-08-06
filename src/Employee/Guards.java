@@ -5,11 +5,13 @@
  */
 package Employee;
 
+import Interfaces.NameInterface;
+
 /**
  *
  * @author Sean
  */
-public class Guards {
+public class Guards implements NameInterface{
     protected String name;
     protected int age;
 

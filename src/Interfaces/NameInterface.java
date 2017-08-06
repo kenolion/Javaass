@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LinkList;
+package Interfaces;
 
-import LinkList.LinkListInterface;
-import java.util.Iterator;
+import java.io.Serializable;
 
 /**
  *
  * @author Sean
  */
-public interface ListIteratorInterface<T> extends LinkListInterface<T> {
-     Iterator getIterator();
-  
+public interface NameInterface extends Serializable{
+    public String getName();
+    
     
 }

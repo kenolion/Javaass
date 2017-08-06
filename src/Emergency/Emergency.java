@@ -5,20 +5,19 @@
  */
 package Emergency;
 
+import Interfaces.NameInterface;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-
-
 /**
  *
  * @author Sean
  */
-public class Emergency implements Serializable{
-    
+public class Emergency implements NameInterface {
+
     private String name;
     private String description;
     private ZonedDateTime date;
@@ -26,13 +25,18 @@ public class Emergency implements Serializable{
     private static int totalEmergency;
     private int emergencyID;
     static final long serialVersionUID = 1L;
-    public Emergency(String name,String description,ZonedDateTime date){
+    int priority;
+    boolean status;
+
+    public Emergency(String name, String description, ZonedDateTime date, int aPriority) {
         this.name = name;
         this.description = description;
         this.date = date;
         formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm", Locale.ENGLISH));
         totalEmergency++;
         emergencyID = totalEmergency;
+        priority = aPriority + 1;
+
     }
 
     /**
@@ -75,6 +79,7 @@ public class Emergency implements Serializable{
      */
     public void setDate(ZonedDateTime date) {
         this.date = date;
+
     }
 
     /**
@@ -104,18 +109,27 @@ public class Emergency implements Serializable{
     public void setEmergencyID(int emergencyID) {
         this.emergencyID = emergencyID;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         String s = "\nEmergency ID:";
         s += emergencyID;
+        s += "/nStatus:";
+        if (status == false) {
+            s += "ONGOING";
+
+        } else {
+            s += "Resolved";
+        }
         s += "\nEmergency Name:";
         s += name;
+        s += "\nPriority :";
+        s += priority;
         s += "\nEmergency Description:";
         s += description;
         s += "\nTime :";
         s += formattedDate;
-        
+
         return s;
     }
 
@@ -132,6 +146,5 @@ public class Emergency implements Serializable{
     public static void setTotalEmergency(int aTotalEmergency) {
         totalEmergency = aTotalEmergency;
     }
-
 
 }
