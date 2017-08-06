@@ -23,10 +23,10 @@ public class Emergency implements NameInterface {
     private ZonedDateTime date;
     private String formattedDate;
     private static int totalEmergency;
-    private int emergencyID;
+    private int ID;
     static final long serialVersionUID = 1L;
     int priority;
-    boolean status;
+    private boolean status;
 
     public Emergency(String name, String description, ZonedDateTime date, int aPriority) {
         this.name = name;
@@ -34,7 +34,7 @@ public class Emergency implements NameInterface {
         this.date = date;
         formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm", Locale.ENGLISH));
         totalEmergency++;
-        emergencyID = totalEmergency;
+        ID = totalEmergency;
         priority = aPriority + 1;
 
     }
@@ -99,23 +99,23 @@ public class Emergency implements NameInterface {
     /**
      * @return the emergencyID
      */
-    public int getEmergencyID() {
-        return emergencyID;
+    public int getID() {
+        return ID;
     }
 
     /**
      * @param emergencyID the emergencyID to set
      */
-    public void setEmergencyID(int emergencyID) {
-        this.emergencyID = emergencyID;
+    public void setID(int emergencyID) {
+        this.ID = emergencyID;
     }
 
     @Override
     public String toString() {
-        String s = "\nEmergency ID:";
-        s += emergencyID;
-        s += "/nStatus:";
-        if (status == false) {
+        String s = "Emergency ID:";
+        s += ID;
+        s += "\nStatus:";
+        if (isStatus() == false) {
             s += "ONGOING";
 
         } else {
@@ -145,6 +145,20 @@ public class Emergency implements NameInterface {
      */
     public static void setTotalEmergency(int aTotalEmergency) {
         totalEmergency = aTotalEmergency;
+    }
+
+    /**
+     * @return the status
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
 }

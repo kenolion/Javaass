@@ -12,9 +12,10 @@ import Interfaces.NameInterface;
  * @author Sean
  */
 public class Guards implements NameInterface{
-    protected String name;
-    protected int age;
-
+    private String name;
+    private int age;
+    private int ID;
+    
     public Guards(String name,int age) {
         this.name = name;
         this.age = age;
@@ -46,6 +47,11 @@ public class Guards implements NameInterface{
      */
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public int getID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

@@ -26,19 +26,17 @@ import javax.swing.JTextArea;
  * @author Sean
  */
 public class NewJFrame extends javax.swing.JFrame {
-
+    
     QueueInterfaceV2<Guards> myList = new LinkQueue<>();
     Iterator<Guards> myIterator;
-    
-    
+
     //Emergency list
     Iterator<Emergency> listIterator;
     ListIteratorInterface<Emergency> LEmergency = new LinkList<>();
 
     //Service
     QueueInterfaceV2<Emergency> QEmergency = new LinkQueue<>();
-    
-    
+
     /**
      * Creates new form NewJFrame
      */
@@ -49,42 +47,42 @@ public class NewJFrame extends javax.swing.JFrame {
         myList.enqueue(new Guards("hoo", 20));
         myList.enqueue(new Guards("ken", 30));
         myList.enqueue(new Guards("keith", 30));
-
+        
         myIterator = myList.getIterator();
         EmergencyMenu.setVisible(false);
         jPanel2.setVisible(false);
         UserMenu.setVisible(false);
         EmergencyMenu.setVisible(false);
-
+        
         try {           //creating storing in file
             FileInputStream fileIn = new FileInputStream("Emergency.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            LEmergency = (ListIteratorInterface<Emergency>)in.readObject();
+            LEmergency = (ListIteratorInterface<Emergency>) in.readObject();
             
             in.close();
             fileIn.close();
             listIterator = LEmergency.getIterator();
             int highestID = 0;
             Emergency temp;
-            while(listIterator.hasNext()){
+            while (listIterator.hasNext()) {
                 temp = listIterator.next();
 //                EmergencyCBox.insertItemAt(temp.getName(),count);
-                
-                if(temp.getEmergencyID() > highestID){
-                    highestID = temp.getEmergencyID();
+
+                if (temp.getID() > highestID) {
+                    highestID = temp.getID();
                 }
                 listIterator.remove();
                 
             }
             LEmergency.getEntry(0).setTotalEmergency(highestID);
-  
+            
             System.out.println(LEmergency.getEntry(0).getTotalEmergency());
         } catch (IOException i) {
             i.printStackTrace();
         } catch (ClassNotFoundException c) {
             c.printStackTrace();
         }
-
+        
     }
 
     /**
@@ -135,14 +133,24 @@ public class NewJFrame extends javax.swing.JFrame {
         UpdateEmergency = new javax.swing.JPanel();
         EmergencyCBox = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        EmergencyTxtArea = new javax.swing.JTextArea();
+        CEmergencyTextArea = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        CEmergencyDetailsTxtArea = new javax.swing.JTextArea();
+        jLabel11 = new javax.swing.JLabel();
+        IDCbox = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
         ServicesPnl = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jLabel10 = new javax.swing.JLabel();
+        EmergencyTxtArea = new javax.swing.JTextArea();
+        OngoingELbl = new javax.swing.JLabel();
         getRequestBtn = new javax.swing.JButton();
+        HandleQBtn = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        QDetailsTxtArea = new javax.swing.JTextArea();
+        jLabel10 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
         BackbtnEmergency = new javax.swing.JButton();
         updateEmergencyBtn = new javax.swing.JButton();
         addEmergencyBtn = new javax.swing.JButton();
@@ -207,9 +215,6 @@ public class NewJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -494,59 +499,116 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        EmergencyTxtArea.setEditable(false);
-        EmergencyTxtArea.setColumns(20);
-        EmergencyTxtArea.setRows(5);
-        jScrollPane3.setViewportView(EmergencyTxtArea);
+        CEmergencyTextArea.setEditable(false);
+        CEmergencyTextArea.setColumns(20);
+        CEmergencyTextArea.setRows(5);
+        jScrollPane3.setViewportView(CEmergencyTextArea);
 
         jLabel7.setText("View Completed Emergency");
 
         jLabel9.setText("Completed Emergency List:");
 
+        CEmergencyDetailsTxtArea.setEditable(false);
+        CEmergencyDetailsTxtArea.setColumns(20);
+        CEmergencyDetailsTxtArea.setRows(5);
+        jScrollPane6.setViewportView(CEmergencyDetailsTxtArea);
+
+        jLabel11.setText("Details");
+
+        IDCbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDCboxActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("ID:");
+
         javax.swing.GroupLayout UpdateEmergencyLayout = new javax.swing.GroupLayout(UpdateEmergency);
         UpdateEmergency.setLayout(UpdateEmergencyLayout);
         UpdateEmergencyLayout.setHorizontalGroup(
             UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UpdateEmergencyLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdateEmergencyLayout.createSequentialGroup()
                 .addGroup(UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(UpdateEmergencyLayout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(jLabel7))
+                        .addGap(37, 37, 37)
+                        .addGroup(UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(UpdateEmergencyLayout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(IDCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(UpdateEmergencyLayout.createSequentialGroup()
+                                .addGap(86, 86, 86)
+                                .addComponent(jLabel7))))
                     .addGroup(UpdateEmergencyLayout.createSequentialGroup()
+                        .addGap(73, 73, 73)
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
-                        .addComponent(EmergencyCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(283, Short.MAX_VALUE))
+                        .addComponent(EmergencyCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                .addGroup(UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(97, 97, 97))
         );
         UpdateEmergencyLayout.setVerticalGroup(
             UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UpdateEmergencyLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addComponent(jLabel11)
+                .addGap(4, 4, 4)
                 .addGroup(UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(EmergencyCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9)))
-                .addContainerGap(84, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(UpdateEmergencyLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(EmergencyCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGap(18, 18, 18)
+                        .addGroup(UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(UpdateEmergencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(IDCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel12)))))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         EmergencyPnl.add(UpdateEmergency, "UpdateEmergency");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane4.setViewportView(jTextArea2);
+        EmergencyTxtArea.setEditable(false);
+        EmergencyTxtArea.setColumns(20);
+        EmergencyTxtArea.setRows(5);
+        jScrollPane4.setViewportView(EmergencyTxtArea);
 
-        jLabel10.setText("Room Service Requests");
+        OngoingELbl.setText("Ongoing Emergency");
 
         getRequestBtn.setText("Get Request");
         getRequestBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 getRequestBtnActionPerformed(evt);
+            }
+        });
+
+        HandleQBtn.setText("Handle Queue");
+        HandleQBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HandleQBtnActionPerformed(evt);
+            }
+        });
+
+        QDetailsTxtArea.setEditable(false);
+        QDetailsTxtArea.setColumns(20);
+        QDetailsTxtArea.setRows(5);
+        jScrollPane5.setViewportView(QDetailsTxtArea);
+
+        jLabel10.setText("Details");
+
+        jButton4.setText("jButton4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -556,21 +618,39 @@ public class NewJFrame extends javax.swing.JFrame {
             ServicesPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ServicesPnlLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addGroup(ServicesPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(getRequestBtn)
-                    .addComponent(jLabel10)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(571, Short.MAX_VALUE))
+                .addGroup(ServicesPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(ServicesPnlLayout.createSequentialGroup()
+                        .addComponent(getRequestBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(HandleQBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4))
+                    .addGroup(ServicesPnlLayout.createSequentialGroup()
+                        .addGroup(ServicesPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(OngoingELbl))
+                        .addGap(109, 109, 109)
+                        .addGroup(ServicesPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(296, Short.MAX_VALUE))
         );
         ServicesPnlLayout.setVerticalGroup(
             ServicesPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ServicesPnlLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addComponent(jLabel10)
+                .addGroup(ServicesPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(OngoingELbl)
+                    .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(ServicesPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(getRequestBtn)
+                .addGroup(ServicesPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(getRequestBtn)
+                    .addComponent(HandleQBtn)
+                    .addComponent(jButton4))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
 
@@ -599,6 +679,11 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jButton3.setText("Emergency and Services");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout EmergencyMenuLayout = new javax.swing.GroupLayout(EmergencyMenu);
         EmergencyMenu.setLayout(EmergencyMenuLayout);
@@ -677,7 +762,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String toDisplay = "";
-
+        
         while (myIterator.hasNext()) {
             toDisplay += myIterator.next().getName() + "\n";
             myIterator.remove();
@@ -733,7 +818,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void emergencyAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emergencyAddActionPerformed
         // TODO add your handling code here:
-        Emergency temp = new Emergency(EmergencyTypeCbox.getSelectedItem().toString(), emergencyDescLbl.getText(), ZonedDateTime.now(),EmergencyTypeCbox.getSelectedIndex());
+        Emergency temp = new Emergency(EmergencyTypeCbox.getSelectedItem().toString(), emergencyDescLbl.getText(), ZonedDateTime.now(), EmergencyTypeCbox.getSelectedIndex());
         QEmergency.enqueue(temp);
 //        LEmergency.add(temp);
 //        int i =0;
@@ -770,7 +855,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         CardLayout card = (CardLayout) EmergencyPnl.getLayout();
         card.show(EmergencyPnl, "UpdateEmergency");
-
+        
 
     }//GEN-LAST:event_updateEmergencyBtnActionPerformed
 
@@ -780,20 +865,42 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void EmergencyCBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmergencyCBoxActionPerformed
         // TODO add your handling code here:
-        displayToTxtArea(LEmergency, listIterator, EmergencyCBox,EmergencyTxtArea);       
+        CEmergencyDetailsTxtArea.setText("");
+        displayListToTxtArea(LEmergency, listIterator, EmergencyCBox, CEmergencyTextArea, true);
+        Iterator itr = LEmergency.getIterator();
+        IDCbox.removeAllItems();
+        Emergency temp;
+        int count = 0;
+        while (itr.hasNext()) {
+            temp = (Emergency) itr.next();
+            if (EmergencyCBox.getSelectedItem().toString().equals(temp.getName())) {
+                IDCbox.addItem(Integer.toString(temp.getID()));
+            }
+            itr.remove();
+        }
 
     }//GEN-LAST:event_EmergencyCBoxActionPerformed
-     //displays to textarea acccording to which was selected in the combo box
-    public void displayToTxtArea(ListIteratorInterface list, Iterator itr,JComboBox box,JTextArea txtArea){
+    //displays to textarea acccording to which was selected in the combo box
+
+    public void displayListToTxtArea(ListIteratorInterface list, Iterator itr, JComboBox box, JTextArea txtArea, boolean displayNameOnly) {
         NameInterface obj;
         String toDisplay = "";
+        int count = 1;
         if (!list.isEmpty()) {
             itr = list.getIterator();
             while (itr.hasNext()) {
-                obj =(NameInterface)itr.next();
-                if (box.getSelectedItem().toString().equals(obj.getName())) {
-                    toDisplay += obj.toString();
+                obj = (NameInterface) itr.next();
+                if (box.getSelectedItem().toString().equals(obj.getName()) || box.getSelectedItem().toString().equals(Integer.toString(obj.getID()))) {
+                    toDisplay += count++ + ".";
+                    if (displayNameOnly) {
+                        toDisplay += obj.getName();
+                        toDisplay += "\nID: " + obj.getID();
+                        toDisplay += "\n";
+                    } else {
+                        toDisplay += obj.toString();
+                    }
                 }
+                
                 itr.remove();
             }
             txtArea.setText(toDisplay);
@@ -801,12 +908,26 @@ public class NewJFrame extends javax.swing.JFrame {
         }
         
     }
-
-
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_formWindowClosed
+    
+    public void displayQueueToTxtArea(QueueInterfaceV2 queue, Iterator itr, JTextArea txtArea) {
+        NameInterface obj;
+        String toDisplay = "";
+        int count = 1;
+        if (!queue.isEmpty()) {
+            itr = queue.getIterator();
+            while (itr.hasNext()) {
+                obj = (NameInterface) itr.next();
+                toDisplay += count++ + ".";
+                toDisplay += obj.getName();
+                toDisplay += "\n";
+                
+                itr.remove();
+            }
+            txtArea.setText(toDisplay);
+            
+        }
+        
+    }
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
@@ -816,7 +937,7 @@ public class NewJFrame extends javax.swing.JFrame {
             out.writeObject(LEmergency);
             out.close();
             fileOut.close();
-
+            
         } catch (IOException i) {
             i.printStackTrace();
         }
@@ -833,8 +954,44 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void getRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getRequestBtnActionPerformed
         // TODO add your handling code here:
-        
+        displayQueueToTxtArea(QEmergency, myIterator, EmergencyTxtArea);
     }//GEN-LAST:event_getRequestBtnActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        CardLayout card = (CardLayout) EmergencyPnl.getLayout();
+        card.show(EmergencyPnl, "RequestServices");
+        displayQueueToTxtArea(QEmergency, myIterator, EmergencyTxtArea);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void HandleQBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HandleQBtnActionPerformed
+        // TODO add your handling code here:
+        Emergency temp = QEmergency.getFront();
+        
+        QDetailsTxtArea.setText(temp.toString());
+        if (!QEmergency.isEmpty()) {
+            displayQueueToTxtArea(QEmergency, myIterator, EmergencyTxtArea);
+        } else {
+            EmergencyTxtArea.setText("");
+        }
+    }//GEN-LAST:event_HandleQBtnActionPerformed
+
+    private void IDCboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDCboxActionPerformed
+        // TODO add your handling code here:
+        if (IDCbox.getItemCount() > 0) {
+            displayListToTxtArea(LEmergency, listIterator, IDCbox, CEmergencyDetailsTxtArea, false);
+        }
+
+    }//GEN-LAST:event_IDCboxActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        if (!EmergencyTxtArea.getText().equals("")) {
+            Emergency temp = QEmergency.dequeue();
+            temp.setStatus(true);
+            LEmergency.add(temp);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -869,14 +1026,16 @@ public class NewJFrame extends javax.swing.JFrame {
                 new NewJFrame().setVisible(true);
             }
         });
-
+        
     }
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AddEmergency;
     private javax.swing.JPanel AddUserPnl;
     private javax.swing.JButton BackbtnEmergency;
+    private javax.swing.JTextArea CEmergencyDetailsTxtArea;
+    private javax.swing.JTextArea CEmergencyTextArea;
     private javax.swing.JButton EmergencyBtn;
     private javax.swing.JComboBox<String> EmergencyCBox;
     private javax.swing.JPanel EmergencyMenu;
@@ -884,9 +1043,13 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton EmergencyServiceButton;
     private javax.swing.JTextArea EmergencyTxtArea;
     private javax.swing.JComboBox<String> EmergencyTypeCbox;
+    private javax.swing.JButton HandleQBtn;
+    private javax.swing.JComboBox<String> IDCbox;
     private javax.swing.JPanel MainMenu;
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JLabel OngoingELbl;
     private javax.swing.JPanel PanelTwo;
+    private javax.swing.JTextArea QDetailsTxtArea;
     private javax.swing.JPanel ServicesPnl;
     private javax.swing.JPanel UpdateEmergency;
     private javax.swing.JButton UserBtn;
@@ -902,10 +1065,13 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -919,8 +1085,9 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JButton maintainUsersButton;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton updateEmergencyBtn;

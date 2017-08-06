@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 public interface NameInterface extends Serializable{
     public String getName();
+    public int getID();
     
     
 }
