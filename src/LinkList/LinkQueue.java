@@ -28,7 +28,7 @@ public class LinkQueue<T> implements QueueInterfaceV2<T>,Serializable {
         } else {
             Node newNode = new Node(newEntry, lastNode.next);
             lastNode.next = newNode;
-            //lastNode = newNode;
+            lastNode = newNode;
 
         }
 
