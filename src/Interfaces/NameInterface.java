@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author Sean
  */
-public interface NameInterface extends Serializable{
+public interface NameInterface extends Serializable,Comparable<NameInterface>{
     public String getName();
     public int getID();
     

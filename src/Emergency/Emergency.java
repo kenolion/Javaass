@@ -28,10 +28,10 @@ public class Emergency implements NameInterface {
     int priority;
     private boolean status;
 
-    public Emergency(String name, String description, ZonedDateTime date, int aPriority) {
+    public Emergency(String name,String desc, ZonedDateTime date, int aPriority) {
         this.name = name;
-        this.description = description;
         this.date = date;
+        description = desc;
         formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm", Locale.ENGLISH));
         totalEmergency++;
         ID = totalEmergency;
@@ -159,6 +159,11 @@ public class Emergency implements NameInterface {
      */
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public int compareTo(NameInterface o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

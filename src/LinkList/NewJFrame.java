@@ -8,8 +8,10 @@ package LinkList;
 import Interfaces.QueueInterfaceV2;
 import Interfaces.ListIteratorInterface;
 import Emergency.Emergency;
+import Emergency.Tasks;
 import Interfaces.NameInterface;
 import Employee.Guards;
+import Interfaces.SortedListInterface;
 import java.awt.CardLayout;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,13 +28,13 @@ import javax.swing.JTextArea;
  * @author Sean
  */
 public class NewJFrame extends javax.swing.JFrame {
-    
-    QueueInterfaceV2<Guards> myList = new LinkQueue<>();
-    Iterator<Guards> myIterator;
+
+    SortedListInterface<Guards> guardList = new SortedLinkedList<>();
+    Iterator<Guards> guardIterator;
 
     //Emergency list
     Iterator<Emergency> listIterator;
-    ListIteratorInterface<Emergency> LEmergency = new LinkList<>();
+    SortedListInterface<Emergency> LEmergency = new SortedLinkedList<>();
 
     //Service
     QueueInterfaceV2<Emergency> QEmergency = new LinkQueue<>();
@@ -43,22 +45,24 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         //jTextArea1.setEditable(false);
-        myList.enqueue(new Guards("Soo", 10));
-        myList.enqueue(new Guards("hoo", 20));
-        myList.enqueue(new Guards("ken", 30));
-        myList.enqueue(new Guards("keith", 30));
-        
-        myIterator = myList.getIterator();
+        guardList.add(new Guards("Soo", 10, ""));
+        guardList.add(new Guards("hoo", 20, ""));
+        guardList.add(new Guards("ken", 30, ""));
+        guardList.add(new Guards("keith", 30, ""));
+        System.out.println(guardList.remove(new Guards("keith",30,"")));
+
+        guardIterator = guardList.getIterator();
         EmergencyMenu.setVisible(false);
         jPanel2.setVisible(false);
         UserMenu.setVisible(false);
         EmergencyMenu.setVisible(false);
-        
+        TaskMenu.setVisible(false);
+
         try {           //creating storing in file
             FileInputStream fileIn = new FileInputStream("Emergency.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            LEmergency = (ListIteratorInterface<Emergency>) in.readObject();
-            
+            LEmergency = (SortedListInterface<Emergency>) in.readObject();
+
             in.close();
             fileIn.close();
             listIterator = LEmergency.getIterator();
@@ -72,17 +76,17 @@ public class NewJFrame extends javax.swing.JFrame {
                     highestID = temp.getID();
                 }
                 listIterator.remove();
-                
+
             }
             LEmergency.getEntry(0).setTotalEmergency(highestID);
+
             
-            System.out.println(LEmergency.getEntry(0).getTotalEmergency());
         } catch (IOException i) {
             i.printStackTrace();
         } catch (ClassNotFoundException c) {
             c.printStackTrace();
         }
-        
+
     }
 
     /**
@@ -99,6 +103,10 @@ public class NewJFrame extends javax.swing.JFrame {
         maintainUsersButton = new javax.swing.JButton();
         EmergencyServiceButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        MainMenu = new javax.swing.JPanel();
+        UserBtn = new javax.swing.JButton();
+        EmergencyBtn = new javax.swing.JButton();
+        ManageTaskBtn = new javax.swing.JButton();
         UserMenu = new javax.swing.JPanel();
         MainPanel = new javax.swing.JPanel();
         AddUserPnl = new javax.swing.JPanel();
@@ -117,9 +125,6 @@ public class NewJFrame extends javax.swing.JFrame {
         addGuardsBtn = new javax.swing.JButton();
         updateGuardsBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
-        MainMenu = new javax.swing.JPanel();
-        UserBtn = new javax.swing.JButton();
-        EmergencyBtn = new javax.swing.JButton();
         EmergencyMenu = new javax.swing.JPanel();
         EmergencyPnl = new javax.swing.JPanel();
         AddEmergency = new javax.swing.JPanel();
@@ -155,6 +160,21 @@ public class NewJFrame extends javax.swing.JFrame {
         updateEmergencyBtn = new javax.swing.JButton();
         addEmergencyBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        TaskMenu = new javax.swing.JPanel();
+        addtaskBtn = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        TaskCbox = new javax.swing.JComboBox<>();
+        updateTaskBtn = new javax.swing.JButton();
+        RemoveTaskBtn = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        TaskDescTextArea = new javax.swing.JTextArea();
+        DisplayTaskBtn = new javax.swing.JButton();
+        hourCbox = new javax.swing.JComboBox<>();
+        TextfieldHr = new javax.swing.JTextField();
+        TaskBackBtn = new javax.swing.JButton();
+        DisplaySelectedGuard = new javax.swing.JButton();
+        SelectGuard = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
 
         jDialog1.setMinimumSize(new java.awt.Dimension(500, 500));
         jDialog1.setResizable(false);
@@ -219,6 +239,51 @@ public class NewJFrame extends javax.swing.JFrame {
                 formWindowClosing(evt);
             }
         });
+
+        UserBtn.setText("Manage Users");
+        UserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserBtnActionPerformed(evt);
+            }
+        });
+
+        EmergencyBtn.setText("Manage Emergency");
+        EmergencyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmergencyBtnActionPerformed(evt);
+            }
+        });
+
+        ManageTaskBtn.setText("Manage Task");
+        ManageTaskBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ManageTaskBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout MainMenuLayout = new javax.swing.GroupLayout(MainMenu);
+        MainMenu.setLayout(MainMenuLayout);
+        MainMenuLayout.setHorizontalGroup(
+            MainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainMenuLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(MainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ManageTaskBtn)
+                    .addComponent(EmergencyBtn)
+                    .addComponent(UserBtn))
+                .addContainerGap(645, Short.MAX_VALUE))
+        );
+        MainMenuLayout.setVerticalGroup(
+            MainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainMenuLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(UserBtn)
+                .addGap(18, 18, 18)
+                .addComponent(EmergencyBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ManageTaskBtn)
+                .addContainerGap(281, Short.MAX_VALUE))
+        );
 
         MainPanel.setLayout(new java.awt.CardLayout());
 
@@ -387,41 +452,6 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addContainerGap(46, Short.MAX_VALUE)
                     .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-
-        UserBtn.setText("Manage Users");
-        UserBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserBtnActionPerformed(evt);
-            }
-        });
-
-        EmergencyBtn.setText("Manage Emergency");
-        EmergencyBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EmergencyBtnActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout MainMenuLayout = new javax.swing.GroupLayout(MainMenu);
-        MainMenu.setLayout(MainMenuLayout);
-        MainMenuLayout.setHorizontalGroup(
-            MainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainMenuLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(MainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(EmergencyBtn)
-                    .addComponent(UserBtn))
-                .addContainerGap(645, Short.MAX_VALUE))
-        );
-        MainMenuLayout.setVerticalGroup(
-            MainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainMenuLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(UserBtn)
-                .addGap(18, 18, 18)
-                .addComponent(EmergencyBtn)
-                .addContainerGap(315, Short.MAX_VALUE))
         );
 
         EmergencyMenu.setPreferredSize(new java.awt.Dimension(804, 418));
@@ -719,6 +749,144 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        addtaskBtn.setText("Add Task");
+        addtaskBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addtaskBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setText("Task Assignments");
+
+        TaskCbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1. Patrol Area", "2. Guard Gate", "3. Beat Minorities", "4. Paperwork" }));
+        TaskCbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TaskCboxActionPerformed(evt);
+            }
+        });
+
+        updateTaskBtn.setText("Update Task");
+        updateTaskBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateTaskBtnActionPerformed(evt);
+            }
+        });
+
+        RemoveTaskBtn.setText("Remove Task");
+        RemoveTaskBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoveTaskBtnActionPerformed(evt);
+            }
+        });
+
+        TaskDescTextArea.setEditable(false);
+        TaskDescTextArea.setColumns(20);
+        TaskDescTextArea.setRows(5);
+        TaskDescTextArea.setText("Current Task\n");
+        jScrollPane7.setViewportView(TaskDescTextArea);
+
+        DisplayTaskBtn.setText("Display All Tasks");
+        DisplayTaskBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DisplayTaskBtnActionPerformed(evt);
+            }
+        });
+
+        hourCbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+
+        TextfieldHr.setText("Hours");
+
+        TaskBackBtn.setText("Back");
+        TaskBackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TaskBackBtnActionPerformed(evt);
+            }
+        });
+
+        DisplaySelectedGuard.setText("Display Selected Guard");
+        DisplaySelectedGuard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DisplaySelectedGuardActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setText("Guard Name");
+
+        javax.swing.GroupLayout TaskMenuLayout = new javax.swing.GroupLayout(TaskMenu);
+        TaskMenu.setLayout(TaskMenuLayout);
+        TaskMenuLayout.setHorizontalGroup(
+            TaskMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TaskMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(TaskMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TaskMenuLayout.createSequentialGroup()
+                        .addGroup(TaskMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(TaskMenuLayout.createSequentialGroup()
+                                .addComponent(TaskCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(52, 52, 52)
+                                .addComponent(hourCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TextfieldHr, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64)
+                                .addComponent(DisplaySelectedGuard)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addGroup(TaskMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TaskMenuLayout.createSequentialGroup()
+                                .addGroup(TaskMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(RemoveTaskBtn)
+                                    .addComponent(updateTaskBtn)
+                                    .addComponent(addtaskBtn))
+                                .addGap(23, 23, 23))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TaskMenuLayout.createSequentialGroup()
+                                .addComponent(DisplayTaskBtn)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TaskMenuLayout.createSequentialGroup()
+                                .addComponent(TaskBackBtn)
+                                .addGap(35, 35, 35))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TaskMenuLayout.createSequentialGroup()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(SelectGuard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(205, 205, 205))))
+        );
+        TaskMenuLayout.setVerticalGroup(
+            TaskMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TaskMenuLayout.createSequentialGroup()
+                .addGroup(TaskMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TaskMenuLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(TaskMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addtaskBtn)
+                            .addComponent(TaskCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hourCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextfieldHr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TaskMenuLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(TaskMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SelectGuard, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DisplaySelectedGuard)))
+                .addGroup(TaskMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TaskMenuLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(updateTaskBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(RemoveTaskBtn)
+                        .addGap(62, 62, 62)
+                        .addComponent(DisplayTaskBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addComponent(TaskBackBtn)
+                        .addContainerGap())
+                    .addGroup(TaskMenuLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane7))))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -737,6 +905,11 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(EmergencyMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(84, 84, 84)
+                    .addComponent(TaskMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(84, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -754,6 +927,11 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(EmergencyMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(70, 70, 70)
+                    .addComponent(TaskMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(70, Short.MAX_VALUE)))
         );
 
         pack();
@@ -762,10 +940,10 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String toDisplay = "";
-        
-        while (myIterator.hasNext()) {
-            toDisplay += myIterator.next().getName() + "\n";
-            myIterator.remove();
+
+        while (guardIterator.hasNext()) {
+            toDisplay += guardIterator.next().getName() + "\n";
+            guardIterator.remove();
         }
         jTextArea1.setText(toDisplay);
 
@@ -778,8 +956,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        myList.enqueue(new Guards(nameTextField.getText(), Integer.parseInt(ageTextField.getText())));
-        myIterator = myList.getIterator();
+        guardList.add(new Guards(nameTextField.getText(), Integer.parseInt(ageTextField.getText()), "test"));
+        guardIterator = guardList.getIterator();
         jComboBox2.getSelectedItem();
 
         //jDialog1.setVisible(true);
@@ -820,22 +998,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         Emergency temp = new Emergency(EmergencyTypeCbox.getSelectedItem().toString(), emergencyDescLbl.getText(), ZonedDateTime.now(), EmergencyTypeCbox.getSelectedIndex());
         QEmergency.enqueue(temp);
-//        LEmergency.add(temp);
-//        int i =0;
-//        while(!temp.getName().equals(EmergencyCBox.getItemAt(i))&& i <= EmergencyCBox.getItemCount()){
-//        EmergencyCBox.addItem(temp.getName());
-//        if(EmergencyCBox.getItemCount() == 1){
-//            break;
-//        }
-//        
-//        i++;
-//        }
-//        qIterator = emergencyList.getIterator();
-//        String toDisplay = "";
-//         while (qIterator.hasNext()) {
-//            toDisplay += qIterator.next().getName() + "\n";
-//            qIterator.remove();
-//        }
+
     }//GEN-LAST:event_emergencyAddActionPerformed
 
     private void BackbtnEmergencyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackbtnEmergencyActionPerformed
@@ -855,7 +1018,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         CardLayout card = (CardLayout) EmergencyPnl.getLayout();
         card.show(EmergencyPnl, "UpdateEmergency");
-        
+
 
     }//GEN-LAST:event_updateEmergencyBtnActionPerformed
 
@@ -882,7 +1045,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_EmergencyCBoxActionPerformed
     //displays to textarea acccording to which was selected in the combo box
 
-    public void displayListToTxtArea(ListIteratorInterface list, Iterator itr, JComboBox box, JTextArea txtArea, boolean displayNameOnly) {
+    public void displayListToTxtArea(SortedListInterface list, Iterator itr, JComboBox box, JTextArea txtArea, boolean displayNameOnly) {
         NameInterface obj;
         String toDisplay = "";
         int count = 1;
@@ -890,43 +1053,53 @@ public class NewJFrame extends javax.swing.JFrame {
             itr = list.getIterator();
             while (itr.hasNext()) {
                 obj = (NameInterface) itr.next();
-                if (box.getSelectedItem().toString().equals(obj.getName()) || box.getSelectedItem().toString().equals(Integer.toString(obj.getID()))) {
-                    toDisplay += count++ + ".";
-                    if (displayNameOnly) {
-                        toDisplay += obj.getName();
-                        toDisplay += "\nID: " + obj.getID();
-                        toDisplay += "\n";
-                    } else {
-                        toDisplay += obj.toString();
+                if (box != null) {
+                    if (box.getSelectedItem().toString().equals(obj.getName()) || box.getSelectedItem().toString().equals(Integer.toString(obj.getID()))) {
+                        toDisplay += count++ + ".";
+                        if (displayNameOnly) {
+                            toDisplay += obj.getName();
+                            toDisplay += "\nID: " + obj.getID();
+                            toDisplay += "\n";
+                        } else {
+                            toDisplay += obj.toString();
+                        }
                     }
+                } else {
+                    obj.toString();
                 }
-                
                 itr.remove();
             }
             txtArea.setText(toDisplay);
-            
+
         }
-        
+
     }
-    
-    public void displayQueueToTxtArea(QueueInterfaceV2 queue, Iterator itr, JTextArea txtArea) {
+
+    public void displayQueueToTxtArea(QueueInterfaceV2 queue, Iterator itr, JTextArea txtArea, boolean isToString) {
         NameInterface obj;
         String toDisplay = "";
         int count = 1;
         if (!queue.isEmpty()) {
             itr = queue.getIterator();
             while (itr.hasNext()) {
+
                 obj = (NameInterface) itr.next();
                 toDisplay += count++ + ".";
-                toDisplay += obj.getName();
+                if (!isToString) {
+
+                    toDisplay += obj.getName();
+
+                } else {
+
+                    toDisplay += obj.toString();
+                }
                 toDisplay += "\n";
-                
                 itr.remove();
             }
             txtArea.setText(toDisplay);
-            
+
         }
-        
+
     }
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -937,7 +1110,7 @@ public class NewJFrame extends javax.swing.JFrame {
             out.writeObject(LEmergency);
             out.close();
             fileOut.close();
-            
+
         } catch (IOException i) {
             i.printStackTrace();
         }
@@ -954,23 +1127,23 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void getRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getRequestBtnActionPerformed
         // TODO add your handling code here:
-        displayQueueToTxtArea(QEmergency, myIterator, EmergencyTxtArea);
+        displayQueueToTxtArea(QEmergency, listIterator, EmergencyTxtArea, false);
     }//GEN-LAST:event_getRequestBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         CardLayout card = (CardLayout) EmergencyPnl.getLayout();
         card.show(EmergencyPnl, "RequestServices");
-        displayQueueToTxtArea(QEmergency, myIterator, EmergencyTxtArea);
+        displayQueueToTxtArea(QEmergency, guardIterator, EmergencyTxtArea, false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void HandleQBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HandleQBtnActionPerformed
         // TODO add your handling code here:
         Emergency temp = QEmergency.getFront();
-        
+
         QDetailsTxtArea.setText(temp.toString());
         if (!QEmergency.isEmpty()) {
-            displayQueueToTxtArea(QEmergency, myIterator, EmergencyTxtArea);
+            displayQueueToTxtArea(QEmergency, guardIterator, EmergencyTxtArea, false);
         } else {
             EmergencyTxtArea.setText("");
         }
@@ -992,6 +1165,92 @@ public class NewJFrame extends javax.swing.JFrame {
             LEmergency.add(temp);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void ManageTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManageTaskBtnActionPerformed
+        // TODO add your handling code here:
+        MainMenu.setVisible(false);
+        TaskMenu.setVisible(true);
+        if (SelectGuard.getItemCount() == 0) {
+            guardIterator = guardList.getIterator();
+            int count = 0;
+            while (guardIterator.hasNext()) {
+                SelectGuard.insertItemAt(guardIterator.next().getName(), count);
+                count++;
+            }
+
+        }
+    }//GEN-LAST:event_ManageTaskBtnActionPerformed
+
+    private void addtaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addtaskBtnActionPerformed
+        // TODO add your handling code here:
+        Tasks temp = new Tasks(TaskCbox.getSelectedItem().toString().substring(3), ZonedDateTime.now(), Integer.parseInt(hourCbox.getSelectedItem().toString()));
+        switch (TaskCbox.getSelectedIndex()) {
+            case 0:
+                temp.setDescription("Patrol the Neighborhood.");
+                break;
+            case 1:
+                temp.setDescription("Guard the Neighborhood Gate.");
+                break;
+            case 2:
+                temp.setDescription("Beat Underprivileged Brown People.");
+                break;
+            case 3:
+                temp.setDescription("Check the money spent.");
+                break;
+            default:
+                break;
+        }
+        guardList.getEntry(SelectGuard.getSelectedIndex() + 1).TaskQueue.enqueue(temp);
+        TaskDescTextArea.setText("Current Task" + "\n" + temp.getName() + "- Task Added");
+    }//GEN-LAST:event_addtaskBtnActionPerformed
+
+    private void TaskCboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TaskCboxActionPerformed
+        // TODO add your handling code here:
+        TaskCbox.setVisible(true);
+
+    }//GEN-LAST:event_TaskCboxActionPerformed
+
+    private void updateTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateTaskBtnActionPerformed
+        // TODO add your handling code here:
+        String t = "";
+        String s = "";
+        Guards temp = guardList.getEntry(SelectGuard.getSelectedIndex() + 1);
+        temp.TaskQueue.getFront().CompleteTask();
+        t = guardList.getEntry(SelectGuard.getSelectedIndex() + 1).TaskQueue.getFront().getName() + " - Task Completed";
+        if (guardList.getEntry(SelectGuard.getSelectedIndex() + 1).TaskQueue.getFront().getisCompleted()) {
+            s = "Task is Already Completed. Remove it";
+        } else {
+            t = "Error. Task Cannot be Completed";
+        }
+
+        TaskDescTextArea.setText("Current Task" + "\n" + t + "\n" + s);
+    }//GEN-LAST:event_updateTaskBtnActionPerformed
+
+    private void RemoveTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveTaskBtnActionPerformed
+        // TODO add your handling code here:
+
+        TaskDescTextArea.setText("Current Task" + "\n" + guardList.getEntry(SelectGuard.getSelectedIndex() + 1).TaskQueue.dequeue().getName() + " - Task Removed");
+    }//GEN-LAST:event_RemoveTaskBtnActionPerformed
+
+    private void DisplayTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisplayTaskBtnActionPerformed
+        // TODO add your handling code here:
+        TaskDescTextArea.setText("");
+        displayQueueToTxtArea(guardList.getEntry(SelectGuard.getSelectedIndex() + 1).TaskQueue, guardIterator, TaskDescTextArea, true);
+    }//GEN-LAST:event_DisplayTaskBtnActionPerformed
+
+    private void TaskBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TaskBackBtnActionPerformed
+        // TODO add your handling code here:
+        TaskMenu.setVisible(false);
+        MainMenu.setVisible(true);
+    }//GEN-LAST:event_TaskBackBtnActionPerformed
+
+    private void DisplaySelectedGuardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisplaySelectedGuardActionPerformed
+        // TODO add your handling code here:
+        String guardname = SelectGuard.getSelectedItem().toString();
+
+        displayListToTxtArea(guardList, guardIterator, TaskCbox, TaskDescTextArea, false);
+
+    }//GEN-LAST:event_DisplaySelectedGuardActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1026,7 +1285,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 new NewJFrame().setVisible(true);
             }
         });
-        
+
     }
 
 
@@ -1036,6 +1295,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton BackbtnEmergency;
     private javax.swing.JTextArea CEmergencyDetailsTxtArea;
     private javax.swing.JTextArea CEmergencyTextArea;
+    private javax.swing.JButton DisplaySelectedGuard;
+    private javax.swing.JButton DisplayTaskBtn;
     private javax.swing.JButton EmergencyBtn;
     private javax.swing.JComboBox<String> EmergencyCBox;
     private javax.swing.JPanel EmergencyMenu;
@@ -1047,21 +1308,31 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> IDCbox;
     private javax.swing.JPanel MainMenu;
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JButton ManageTaskBtn;
     private javax.swing.JLabel OngoingELbl;
     private javax.swing.JPanel PanelTwo;
     private javax.swing.JTextArea QDetailsTxtArea;
+    private javax.swing.JButton RemoveTaskBtn;
+    private javax.swing.JComboBox<String> SelectGuard;
     private javax.swing.JPanel ServicesPnl;
+    private javax.swing.JButton TaskBackBtn;
+    private javax.swing.JComboBox<String> TaskCbox;
+    private javax.swing.JTextArea TaskDescTextArea;
+    private javax.swing.JPanel TaskMenu;
+    private javax.swing.JTextField TextfieldHr;
     private javax.swing.JPanel UpdateEmergency;
     private javax.swing.JButton UserBtn;
     private javax.swing.JPanel UserMenu;
     private javax.swing.JButton addEmergencyBtn;
     private javax.swing.JButton addGuardsBtn;
+    private javax.swing.JButton addtaskBtn;
     private javax.swing.JTextField ageTextField;
     private javax.swing.JButton backBtn;
     private javax.swing.JButton emergencyAdd;
     private javax.swing.JTextArea emergencyDescLbl;
     private javax.swing.JLabel emergencyNameLbl;
     private javax.swing.JButton getRequestBtn;
+    private javax.swing.JComboBox<String> hourCbox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -1072,6 +1343,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1087,10 +1360,12 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton maintainUsersButton;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton updateEmergencyBtn;
     private javax.swing.JButton updateGuardsBtn;
+    private javax.swing.JButton updateTaskBtn;
     // End of variables declaration//GEN-END:variables
 }

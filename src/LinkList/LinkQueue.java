@@ -14,10 +14,11 @@ import java.util.NoSuchElementException;
  *
  * @author Sean
  */
-public class LinkQueue<T> implements QueueInterfaceV2<T>,Serializable {
+public class LinkQueue<T> implements QueueInterfaceV2<T>, Serializable {
 
     Node lastNode;
     static final long serialVersionUID = 1L;
+
     @Override
     public void enqueue(T newEntry) {
 
@@ -67,10 +68,11 @@ public class LinkQueue<T> implements QueueInterfaceV2<T>,Serializable {
     public Iterator getIterator() {
         return new QueueIterator();
     }
-    
+
     private class QueueIterator<T> implements Iterator {
 
         Node currNode = lastNode.next;
+
         @Override
         public boolean hasNext() {
 
@@ -87,17 +89,16 @@ public class LinkQueue<T> implements QueueInterfaceV2<T>,Serializable {
             return temp;
 
         }
-        
-       
+
         public void remove() {
-                if (currNode == lastNode.next) {
-                    currNode = null;
-                } 
+            if (currNode == lastNode.next) {
+                currNode = null;
+            }
         }
 
     }
 
-    private class Node implements Serializable{
+    private class Node implements Serializable {
 
         private T data;
         private Node next;
@@ -145,4 +146,13 @@ public class LinkQueue<T> implements QueueInterfaceV2<T>,Serializable {
         }
     }
 
+    @Override
+    public String toString() {
+        String s = "";
+        Iterator itr = getIterator();
+        while(itr.hasNext()){
+            s += itr.next().toString();
+        }
+        return s;
+    }
 }
